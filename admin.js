@@ -69,6 +69,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }).format(new Date(`${value}T12:00:00+08:00`));
   }
 
+  function hasValidTimeWindow(start, end) {
+    return /^\d{2}:\d{2}$/.test(start)
+      && /^\d{2}:\d{2}$/.test(end)
+      && start < end;
+  }
+
   function setOverrideFieldsState() {
     overrideFields.disabled = !overrideOpen.checked;
   }
@@ -179,8 +185,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  async function loadLessons() {
-    setStatus("");
+  async function loadLessons(clearStatus = true) {
+    if (clearStatus) setStatus("");
     const { data, error } = await client.from("lesson_settings")
       .select("class_title,description,weekdays,start_time,end_time,duration_minutes,capacity,booking_horizon_days,is_active")
       .eq("id", true)
@@ -290,6 +296,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           return;
         }
         saveEdit.disabled = true;
+        setStatus("Saving booking changes…", "pending");
         const { error: updateError } = await client.rpc("admin_update_lesson_booking", {
           p_booking_id: booking.id,
           p_student_name: String(formData.get("student_name") || "").trim(),
@@ -302,7 +309,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           showError("Could not update booking", updateError);
           return;
         }
-        await loadLessons();
+        await loadLessons(false);
         setStatus("Booking details and session time updated.");
       });
       const cancel = document.createElement("button");
@@ -312,6 +319,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       cancel.addEventListener("click", async () => {
         if (!window.confirm(`Cancel ${booking.student_name}’s lesson booking?`)) return;
         cancel.disabled = true;
+        setStatus("Cancelling lesson booking…", "pending");
         const { data: cancelled, error: cancelError } = await client.from("lesson_bookings")
           .update({ status: "cancelled" })
           .eq("id", booking.id)
@@ -323,7 +331,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           showError("Could not cancel lesson booking", cancelError || new Error("The booking was already changed."));
           return;
         }
-        await loadLessons();
+        await loadLessons(false);
         setStatus("Lesson booking cancelled. Its time is available to book again.");
       });
       record.append(name, when, contact, editForm, cancel);
@@ -423,6 +431,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   settingsForm.addEventListener("submit", async event => {
     event.preventDefault();
     if (!settingsForm.reportValidity()) return;
+    if (!hasValidTimeWindow(settingsForm.elements.start_time.value, settingsForm.elements.end_time.value)) {
+      setStatus("The daily end time must be later than the start time. Sessions cannot cross midnight.", "error");
+      settingsForm.elements.end_time.focus();
+      return;
+    }
     const weekdays = [...settingsForm.querySelectorAll('input[name="weekdays"]:checked')]
       .map(input => Number(input.value));
     if (!weekdays.length) {
@@ -444,6 +457,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
     const button = settingsForm.querySelector('button[type="submit"]');
     button.disabled = true;
+    setStatus("Saving lesson settings…", "pending");
     const { data, error } = await client.from("lesson_settings")
       .update(values)
       .eq("id", true)
@@ -454,8 +468,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       showError("Could not save lesson settings", error || new Error("No lesson settings were updated."));
       return;
     }
+    await loadLessons(false);
     setStatus("Lesson schedule saved and published.");
-    await loadLessons();
   });
 
   adminsForm.addEventListener("submit", async event => {
@@ -464,6 +478,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const email = String(new FormData(adminsForm).get("email") || "").trim().toLowerCase();
     const button = adminsForm.querySelector('button[type="submit"]');
     button.disabled = true;
+    setStatus("Adding studio administrator…", "pending");
     const { error } = await client.rpc("admin_add_lesson_admin", { p_email: email });
     button.disabled = false;
     if (error) {
@@ -486,6 +501,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       setStatus("Choose today or a future date for a schedule override.", "error");
       return;
     }
+    if (!hasValidTimeWindow(overrideForm.elements.start_time.value, overrideForm.elements.end_time.value)) {
+      setStatus("The date override end time must be later than the start time. Sessions cannot cross midnight.", "error");
+      overrideForm.elements.end_time.focus();
+      return;
+    }
     const values = {
       session_date: sessionDate,
       is_open: overrideOpen.checked,
@@ -498,6 +518,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const originalDate = overrideOriginalDate.value;
     const button = document.getElementById("override-save");
     button.disabled = true;
+    setStatus(originalDate ? "Updating date override…" : "Saving date override…", "pending");
     let error;
     if (originalDate) {
       const result = await client.from("lesson_date_overrides")
@@ -516,7 +537,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
     resetOverrideForm();
-    await loadLessons();
+    await loadLessons(false);
     setStatus("Date override saved. Public availability has been updated.");
   });
 

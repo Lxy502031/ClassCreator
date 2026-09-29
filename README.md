@@ -32,15 +32,18 @@ After the database migration is applied, deploy the Edge Function from this repo
 npx supabase functions deploy lesson-booking --project-ref ulahmnqqafztbcyzfuej --no-verify-jwt
 ```
 
-### Resend email
+### Free Gmail confirmation email
 
-Add these secrets in Supabase → Edge Functions → Secrets:
+The recommended no-domain setup uses Google Apps Script to send confirmations from the administrator's Gmail account. Consumer Google accounts currently have a 100-recipient daily MailApp quota; the included script caps this integration at 90 sends per UTC day to leave some headroom. Google can change quotas, and delivery is subject to Gmail spam controls.
 
-- `RESEND_API_KEY`: a Resend key with **Sending access**
-- `LESSON_FROM_EMAIL`: `onboarding@resend.dev` for Resend's test sender, or an address on a verified custom domain for real student confirmations
-- `LESSON_TEST_RECIPIENT`: the email address associated with the Resend account for test sends only
-- `LESSON_SITE_URL`: the deployed ClassCreator site origin, when available
+1. Sign in to the Gmail account you want students to see as the sender.
+2. Open [Google Apps Script](https://script.google.com/) and create a new project.
+3. Copy `google-apps-script/Code.gs` into the script editor.
+4. In **Project Settings → Script Properties**, add `BOOKING_EMAIL_TOKEN` with a long random secret value. Generate it locally, for example: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`. Do not paste the value into chat, GitHub, or this repository.
+5. Select **Deploy → New deployment → Web app**. Set **Execute as** to your account and **Who has access** to **Anyone**, then deploy and authorize the requested Gmail permissions. Anyone can reach the endpoint, but only requests with the secret token are accepted.
+6. Copy the deployed Web app URL (ending in `/exec`). In Supabase → **Edge Functions → Secrets**, set `GOOGLE_APPS_SCRIPT_URL` to that URL and `GOOGLE_APPS_SCRIPT_TOKEN` to the same secret used in Script Properties.
+7. Deploy the `lesson-booking` Edge Function using the command above. New reservations will send a confirmation to the student's email address; test with an address you control before relying on it.
 
-When `LESSON_TEST_RECIPIENT` is set, confirmation messages are routed only to that fixed test inbox, never to the student-provided address. The booking page explicitly says this is test delivery. Remove that secret only when a verified custom sending domain is ready and real student email delivery is intended. Resend's test sender cannot send to arbitrary students.
+The site sends through Google Apps Script when both Google secrets are configured; otherwise it falls back to Resend if configured. Never add provider keys or tokens to the website or commit them. Resend's free transactional email plan includes up to 3,000 emails/month (100/day), but sending requires a domain you own and verify; a `netlify.app` subdomain is not a substitute for a domain with DNS control.
 
 Supabase provides `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to the Edge Function. Never add secret values to this repository or paste them into source files.

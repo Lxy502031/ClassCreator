@@ -159,14 +159,40 @@ Deno.serve(async request => {
   const apiKey = Deno.env.get("RESEND_API_KEY");
   const fromEmail = Deno.env.get("LESSON_FROM_EMAIL");
   const testRecipient = Deno.env.get("LESSON_TEST_RECIPIENT")?.trim();
+  const googleAppsScriptUrl = Deno.env.get("GOOGLE_APPS_SCRIPT_URL");
+  const googleAppsScriptToken = Deno.env.get("GOOGLE_APPS_SCRIPT_TOKEN");
   const testSender = fromEmail === "onboarding@resend.dev";
-  const emailTestMode = Boolean(testRecipient) || testSender;
-  let emailSent = false;
-  const emailConfigured = Boolean(apiKey && fromEmail && (!testSender || testRecipient));
+  const resendConfigured = Boolean(apiKey && fromEmail && (!testSender || testRecipient));
+  const googleAppsScriptConfigured = Boolean(googleAppsScriptUrl && googleAppsScriptToken);
+  const emailTestMode = !googleAppsScriptConfigured && (Boolean(testRecipient) || testSender);
+  let emailSent = booking.already_booked && booking.email_status === "sent";
+  const emailConfigured = googleAppsScriptConfigured || resendConfigured;
 
-  if (booking.already_booked) {
-    emailSent = booking.email_status === "sent";
-  } else if (apiKey && fromEmail && emailConfigured) {
+  if (!booking.already_booked && googleAppsScriptConfigured) {
+    try {
+      const response = await fetch(googleAppsScriptUrl, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          token: googleAppsScriptToken,
+          to: payload.email.trim().toLowerCase(),
+          name: payload.name.trim(),
+          classTitle: booking.class_title,
+          when: formatSingaporeTime(booking.slot_start),
+          durationMinutes: booking.duration_minutes,
+          phone: payload.phone.trim()
+        })
+      });
+      const result: unknown = await response.json();
+      emailSent = response.ok && isRecord(result) && result.sent === true;
+      if (!emailSent) {
+        console.error("Google Apps Script lesson confirmation failed.", response.status,
+          isRecord(result) && typeof result.error === "string" ? result.error : "Invalid response.");
+      }
+    } catch (error) {
+      console.error("Could not send lesson confirmation through Google Apps Script.", error);
+    }
+  } else if (!booking.already_booked && resendConfigured) {
     const when = formatSingaporeTime(booking.slot_start);
     const html = [
       `<p>Hi ${escapeHtml(payload.name.trim())},</p>`,

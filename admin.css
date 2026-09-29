@@ -345,6 +345,11 @@
   background: var(--sage-light);
 }
 
+.admin-status[data-kind="pending"] {
+  background: #edf2ff;
+  color: #34345b;
+}
+
 .admin-status[data-kind="error"] {
   background: #fbe8e3;
   color: #8e392c;
