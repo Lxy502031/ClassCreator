@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
+
+:root {
+  --ink: #24302d;
+  --muted: #6e7772;
+  --cream: #f7f3ed;
+  --paper: #fffdf9;
+  --terracotta: #c96b4b;
+  --terracotta-dark: #a95136;
+  --sage: #8ca69a;
+  --sage-light: #e4eee8;
+  --line: #e7e0d7;
+  font-family: "DM Sans", sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(245, 223, 212, .45), transparent 30%),
+    radial-gradient(circle at 90% 30%, rgba(228, 238, 232, .55), transparent 28%),
+    var(--cream);
+  color: var(--ink);
+  font-family: "DM Sans", sans-serif;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+.logo {
+  font-family: "Playfair Display", Georgia, serif;
+  line-height: 1.15;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(140, 166, 154, .55);
+  outline-offset: 2px;
+}

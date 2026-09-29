@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f3ed" />
+  <title>Class Admin | ClassCreator</title>
+  <link rel="stylesheet" href="./base.css" />
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body class="admin-page">
+  <header class="admin-header">
+    <a class="logo" href="./">ClassCreator</a>
+    <nav aria-label="Main navigation">
+      <a href="./">Public booking page</a>
+      <button id="admin-signout" type="button" hidden>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <section id="admin-gate" class="admin-card" aria-live="polite">
+      <p class="admin-eyebrow">Private class tools</p>
+      <h1 id="admin-gate-title">Checking administrator access…</h1>
+      <p id="admin-gate-message">Sign in with the authorized administrator account to manage classes.</p>
+      <form id="admin-signin-form" class="admin-form" hidden>
+        <label for="admin-email">Email address</label>
+        <input id="admin-email" name="email" type="email" autocomplete="username" required />
+        <label for="admin-password">Password</label>
+        <input id="admin-password" name="password" type="password" autocomplete="current-password" required />
+        <button class="admin-primary" type="submit">Sign in</button>
+      </form>
+    </section>
+
+    <section id="admin-app" hidden>
+      <div class="admin-heading">
+        <div>
+          <p class="admin-eyebrow">Class controls</p>
+          <h1>Lesson schedule</h1>
+          <p id="admin-identity" class="admin-muted"></p>
+        </div>
+        <a class="admin-public-link" href="./">View booking page ↗</a>
+      </div>
+      <p id="admin-status" class="admin-status" role="status" aria-live="polite" hidden></p>
+
+      <section class="admin-card">
+        <div class="admin-section-heading">
+          <div>
+            <h2>Public class details</h2>
+            <p class="admin-muted">Changes appear on the booking page as soon as they are saved.</p>
+          </div>
+          <button id="admin-refresh" type="button">Refresh</button>
+        </div>
+        <form id="lesson-settings-form" class="admin-form">
+          <label for="lesson-title">Class title</label>
+          <input id="lesson-title" name="class_title" maxlength="120" required />
+          <label for="lesson-description">Class description</label>
+          <textarea id="lesson-description" name="description" maxlength="2000" rows="4" required></textarea>
+          <fieldset class="weekday-options">
+            <legend>Available weekdays <span>Times use Singapore time.</span></legend>
+            <label><input type="checkbox" name="weekdays" value="1" /> Monday</label>
+            <label><input type="checkbox" name="weekdays" value="2" /> Tuesday</label>
+            <label><input type="checkbox" name="weekdays" value="3" /> Wednesday</label>
+            <label><input type="checkbox" name="weekdays" value="4" /> Thursday</label>
+            <label><input type="checkbox" name="weekdays" value="5" /> Friday</label>
+            <label><input type="checkbox" name="weekdays" value="6" /> Saturday</label>
+            <label><input type="checkbox" name="weekdays" value="0" /> Sunday</label>
+          </fieldset>
+          <div class="admin-time-fields">
+            <label for="lesson-start">Daily start time
+              <input id="lesson-start" name="start_time" type="time" required />
+            </label>
+            <label for="lesson-end">Daily end time
+              <input id="lesson-end" name="end_time" type="time" required />
+            </label>
+          </div>
+          <label for="lesson-duration">Lesson duration in minutes <span>15–240 minutes.</span></label>
+          <input id="lesson-duration" name="duration_minutes" type="number" min="15" max="240" step="15" required />
+          <label for="lesson-horizon">How many days ahead can students book?</label>
+          <input id="lesson-horizon" name="booking_horizon_days" type="number" min="7" max="180" required />
+          <label class="admin-checkbox"><input id="lesson-active" name="is_active" type="checkbox" /> Accept lesson bookings</label>
+          <button class="admin-primary" type="submit">Save lesson settings</button>
+        </form>
+      </section>
+
+      <section class="admin-card">
+        <div class="admin-section-heading">
+          <div>
+            <h2>Upcoming bookings</h2>
+            <p class="admin-muted">Student contact information is private and visible only to the verified administrator.</p>
+          </div>
+        </div>
+        <div id="lesson-booking-list" class="booking-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./admin.js" defer></script>
+</body>
+</html>

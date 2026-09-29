@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Discover creative classes and reserve your place in an upcoming lesson." />
+  <meta name="theme-color" content="#f7f3ed" />
+  <title>Book a Creative Class | ClassCreator</title>
+  <link rel="stylesheet" href="./base.css" />
+  <link rel="stylesheet" href="./lessons.css" />
+</head>
+<body class="lessons-page">
+  <header class="lessons-header">
+    <a class="logo" href="./">ClassCreator</a>
+    <nav aria-label="Main navigation">
+      <a href="./admin.html">Class admin</a>
+    </nav>
+  </header>
+
+  <main class="lessons-main">
+    <section class="lessons-intro">
+      <p class="lessons-eyebrow">Make something with us</p>
+      <h1 id="lesson-title">Creative lessons, made personal.</h1>
+      <p id="lesson-description">Choose a time on the calendar and reserve your place in a creative lesson.</p>
+      <div class="lessons-intro-note"><span aria-hidden="true">✦</span> Friendly, hands-on sessions for curious makers</div>
+    </section>
+
+    <section id="lessons-booking" class="lessons-booking" aria-labelledby="booking-heading" hidden>
+      <div class="lessons-calendar-panel">
+        <div class="lessons-section-heading">
+          <div>
+            <p class="lessons-eyebrow">Find a time</p>
+            <h2 id="booking-heading">Choose your lesson</h2>
+            <p id="lesson-duration" class="lessons-muted"></p>
+          </div>
+        </div>
+        <div class="lessons-calendar-nav">
+          <button id="lesson-month-previous" type="button" aria-label="Previous month">‹</button>
+          <h3 id="lesson-month-label" aria-live="polite"></h3>
+          <button id="lesson-month-next" type="button" aria-label="Next month">›</button>
+        </div>
+        <div class="lessons-calendar-grid" id="lesson-calendar" role="group" aria-label="Available lesson dates"></div>
+        <p id="lesson-calendar-message" class="lessons-muted" role="status" aria-live="polite"></p>
+        <div class="lessons-time-panel">
+          <h3 id="lesson-times-heading">Available times</h3>
+          <div id="lesson-times" class="lessons-time-options"></div>
+        </div>
+      </div>
+
+      <form id="lesson-booking-form" class="lessons-form">
+        <p class="lessons-eyebrow">Save your place</p>
+        <h2>Lesson details</h2>
+        <p class="lessons-muted">No payment is needed to reserve a lesson. Confirmation details will be shown after you book.</p>
+        <label for="lesson-student-name">Your name</label>
+        <input id="lesson-student-name" name="name" autocomplete="name" maxlength="100" required />
+        <label for="lesson-student-email">Email address</label>
+        <input id="lesson-student-email" name="email" type="email" autocomplete="email" maxlength="320" required />
+        <label for="lesson-student-phone">Phone number</label>
+        <input id="lesson-student-phone" name="phone" type="tel" autocomplete="tel" maxlength="24" placeholder="+65 8123 4567" required />
+        <input class="lessons-honeypot" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div id="lesson-selection-summary" class="lesson-selection-summary">Choose an available date and time to continue.</div>
+        <button id="lesson-booking-submit" class="lessons-submit" type="submit" disabled>Reserve my lesson</button>
+        <p id="lesson-booking-status" class="lessons-form-status" role="status" aria-live="polite" hidden></p>
+        <p class="lessons-privacy-note">Your contact details are used only to manage this lesson booking and its confirmation.</p>
+      </form>
+    </section>
+
+    <section id="lessons-unavailable" class="lessons-unavailable" role="status" hidden>
+      <h2>Bookings aren’t open right now</h2>
+      <p>Please check back soon for upcoming lessons.</p>
+    </section>
+    <p id="lessons-loading" class="lessons-loading" role="status">Loading lesson availability…</p>
+  </main>
+
+  <footer class="lessons-footer">
+    <a href="./">ClassCreator</a>
+    <span>Find a time to make something wonderful.</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./lessons.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+project_id = "craftsgalore"
+
+[functions.lesson-booking]
+verify_jwt = false

@@ -1,0 +1,268 @@
+.admin-page [hidden] {
+  display: none !important;
+}
+
+.admin-header {
+  align-items: center;
+  background: rgba(255, 253, 249, .95);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding: 14px clamp(18px, 5vw, 68px);
+}
+
+.admin-header .logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.admin-header nav {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+}
+
+.admin-header nav a,
+.admin-header nav button {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .84rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.admin-header nav a:hover,
+.admin-header nav button:hover {
+  color: var(--terracotta-dark);
+}
+
+.admin-main {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 48px 22px 80px;
+}
+
+.admin-heading,
+.admin-section-heading {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.admin-heading {
+  margin-bottom: 24px;
+}
+
+.admin-heading h1,
+.admin-card h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.admin-eyebrow {
+  color: var(--terracotta-dark);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.admin-muted {
+  color: var(--muted);
+  font-size: .84rem;
+  margin-top: 7px;
+}
+
+.admin-public-link {
+  color: var(--terracotta-dark);
+  font-size: .84rem;
+  font-weight: 700;
+}
+
+.admin-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(60, 47, 36, .06);
+  margin-bottom: 22px;
+  padding: clamp(20px, 4vw, 32px);
+}
+
+.admin-card > h1 {
+  margin-top: 8px;
+}
+
+.admin-card > p:not(.admin-eyebrow) {
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+.admin-section-heading {
+  margin-bottom: 18px;
+}
+
+.admin-section-heading h2 {
+  font-size: 1.45rem;
+}
+
+.admin-section-heading > button,
+.admin-header nav button {
+  background: var(--sage-light);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 9px 15px;
+}
+
+.admin-form {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-form > label,
+.admin-form label {
+  color: var(--ink);
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.admin-form input:not([type="checkbox"]),
+.admin-form textarea {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  min-height: 44px;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.admin-form textarea {
+  resize: vertical;
+}
+
+.weekday-options {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  margin: 8px 0;
+  padding: 14px;
+}
+
+.weekday-options legend {
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 0 6px;
+}
+
+.weekday-options legend span,
+.admin-form label span {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 400;
+}
+
+.weekday-options label,
+.admin-checkbox {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.admin-time-fields {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-time-fields label {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-primary {
+  background: var(--terracotta-dark);
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 46px;
+  padding: 10px 18px;
+  width: fit-content;
+}
+
+.admin-primary:disabled,
+.admin-section-heading button:disabled {
+  cursor: wait;
+  opacity: .6;
+}
+
+.admin-status {
+  border-radius: 10px;
+  margin: 0 0 20px;
+  padding: 12px 15px;
+}
+
+.admin-status[data-kind="success"] {
+  background: var(--sage-light);
+}
+
+.admin-status[data-kind="error"] {
+  background: #fbe8e3;
+  color: #8e392c;
+}
+
+.booking-list {
+  display: grid;
+  gap: 12px;
+}
+
+.booking-record {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.booking-record h3 {
+  font-size: 1.1rem;
+}
+
+.booking-record p {
+  color: var(--muted);
+  font-size: .82rem;
+  margin-top: 6px;
+}
+
+.booking-record button {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--terracotta-dark);
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 700;
+  margin-top: 12px;
+  padding: 8px 14px;
+}
+
+@media (max-width: 560px) {
+  .admin-main {
+    padding: 30px 14px 52px;
+  }
+
+  .admin-heading,
+  .admin-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-time-fields {
+    grid-template-columns: 1fr;
+  }
+}
