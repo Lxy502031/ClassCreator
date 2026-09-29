@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f7f3ed" />
-  <title>Class Admin | ClassCreator</title>
-  <link rel="stylesheet" href="./base.css" />
-  <link rel="stylesheet" href="./admin.css" />
+  <meta name="theme-color" content="#f5f5f8" />
+  <title>Class Admin | Qingqing’s Knitting Cottage</title>
+  <link rel="stylesheet" href="./base.css?v=2" />
+  <link rel="stylesheet" href="./admin.css?v=3" />
 </head>
 <body class="admin-page">
   <header class="admin-header">
-    <a class="logo" href="./">ClassCreator</a>
+    <a class="logo" href="./">Qingqing’s Knitting Cottage</a>
     <nav aria-label="Main navigation">
-      <a href="./">Public booking page</a>
+      <a href="./">Qingqing’s Knitting Cottage</a>
       <button id="admin-signout" type="button" hidden>Sign out</button>
     </nav>
   </header>
@@ -21,7 +21,7 @@
     <section id="admin-gate" class="admin-card" aria-live="polite">
       <p class="admin-eyebrow">Private class tools</p>
       <h1 id="admin-gate-title">Checking administrator access…</h1>
-      <p id="admin-gate-message">Sign in with the authorized administrator account to manage classes.</p>
+      <p id="admin-gate-message">Sign in with Qingqing’s authorized administrator account to manage classes.</p>
       <form id="admin-signin-form" class="admin-form" hidden>
         <label for="admin-email">Email address</label>
         <input id="admin-email" name="email" type="email" autocomplete="username" required />
@@ -34,8 +34,8 @@
     <section id="admin-app" hidden>
       <div class="admin-heading">
         <div>
-          <p class="admin-eyebrow">Class controls</p>
-          <h1>Lesson schedule</h1>
+          <p class="admin-eyebrow">Qingqing’s studio controls</p>
+          <h1>Lessons &amp; bookings</h1>
           <p id="admin-identity" class="admin-muted"></p>
         </div>
         <a class="admin-public-link" href="./">View booking page ↗</a>
@@ -65,6 +65,7 @@
             <label><input type="checkbox" name="weekdays" value="6" /> Saturday</label>
             <label><input type="checkbox" name="weekdays" value="0" /> Sunday</label>
           </fieldset>
+          <p class="admin-help">These are your regular weekly sessions. Use date overrides below to open an extra date or close a day.</p>
           <div class="admin-time-fields">
             <label for="lesson-start">Daily start time
               <input id="lesson-start" name="start_time" type="time" required />
@@ -75,6 +76,8 @@
           </div>
           <label for="lesson-duration">Lesson duration in minutes <span>15–240 minutes.</span></label>
           <input id="lesson-duration" name="duration_minutes" type="number" min="15" max="240" step="15" required />
+          <label for="lesson-capacity">Students per session <span>1–50 students.</span></label>
+          <input id="lesson-capacity" name="capacity" type="number" min="1" max="50" step="1" required />
           <label for="lesson-horizon">How many days ahead can students book?</label>
           <input id="lesson-horizon" name="booking_horizon_days" type="number" min="7" max="180" required />
           <label class="admin-checkbox"><input id="lesson-active" name="is_active" type="checkbox" /> Accept lesson bookings</label>
@@ -82,11 +85,62 @@
         </form>
       </section>
 
+      <section class="admin-card" aria-labelledby="lesson-admins-heading">
+        <div class="admin-section-heading">
+          <div>
+            <p class="admin-eyebrow">Private access</p>
+            <h2 id="lesson-admins-heading">Studio administrators</h2>
+            <p class="admin-muted">Only add people you trust to manage schedules and view student details. Create and verify their Supabase account before adding their email here.</p>
+          </div>
+        </div>
+        <form id="lesson-admin-form" class="admin-form admin-admin-form">
+          <label for="lesson-admin-email">Verified administrator email</label>
+          <input id="lesson-admin-email" name="email" type="email" autocomplete="off" maxlength="320" required />
+          <button class="admin-primary" type="submit">Add administrator</button>
+        </form>
+        <div id="lesson-admin-list" class="admin-list"></div>
+      </section>
+
+      <section class="admin-card" aria-labelledby="date-overrides-heading">
+        <div class="admin-section-heading">
+          <div>
+            <p class="admin-eyebrow">Date-by-date controls</p>
+            <h2 id="date-overrides-heading">Extra sessions &amp; days off</h2>
+            <p class="admin-muted">Add a one-off session outside your regular days, change that date’s hours or capacity, or close a date. An override replaces the weekly schedule for that date.</p>
+          </div>
+        </div>
+        <form id="date-override-form" class="admin-form">
+          <input id="override-original-date" name="original_date" type="hidden" />
+          <label for="override-date">Date</label>
+          <input id="override-date" name="session_date" type="date" required />
+          <label class="admin-checkbox"><input id="override-open" name="is_open" type="checkbox" checked /> Offer sessions on this date</label>
+          <fieldset id="override-session-fields" class="override-session-fields">
+            <div class="admin-time-fields">
+              <label for="override-start">Start time
+                <input id="override-start" name="start_time" type="time" value="13:00" required />
+              </label>
+              <label for="override-end">End time
+                <input id="override-end" name="end_time" type="time" value="15:00" required />
+              </label>
+            </div>
+            <label for="override-duration">Session length in minutes <span>15–240 minutes.</span></label>
+            <input id="override-duration" name="duration_minutes" type="number" min="15" max="240" step="15" value="60" required />
+            <label for="override-capacity">Students per session <span>1–50 students.</span></label>
+            <input id="override-capacity" name="capacity" type="number" min="1" max="50" step="1" value="1" required />
+          </fieldset>
+          <div class="admin-form-actions">
+            <button id="override-save" class="admin-primary" type="submit">Save date override</button>
+            <button id="override-reset" class="admin-secondary" type="button">Clear form</button>
+          </div>
+        </form>
+        <div id="date-override-list" class="override-list"></div>
+      </section>
+
       <section class="admin-card">
         <div class="admin-section-heading">
           <div>
             <h2>Upcoming bookings</h2>
-            <p class="admin-muted">Student contact information is private and visible only to the verified administrator.</p>
+            <p class="admin-muted">Edit student details, reschedule within your available slots, or cancel a booking. Student information is private and visible only to the verified administrator.</p>
           </div>
         </div>
         <div id="lesson-booking-list" class="booking-list"></div>
@@ -96,6 +150,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="./supabase-config.js"></script>
-  <script src="./admin.js" defer></script>
+  <script src="./admin.js?v=2" defer></script>
 </body>
 </html>

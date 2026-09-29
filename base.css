@@ -1,15 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 :root {
-  --ink: #24302d;
-  --muted: #6e7772;
-  --cream: #f7f3ed;
-  --paper: #fffdf9;
-  --terracotta: #c96b4b;
-  --terracotta-dark: #a95136;
-  --sage: #8ca69a;
-  --sage-light: #e4eee8;
-  --line: #e7e0d7;
+  --ink: #17172b;
+  --muted: #686879;
+  --cream: #f5f5f8;
+  --paper: #ffffff;
+  --terracotta: #ff6848;
+  --terracotta-dark: #e94c32;
+  --sage: #5546ff;
+  --sage-light: #eeedff;
+  --line: #e2e2ec;
+  --acid: #e4ff72;
   font-family: "DM Sans", sans-serif;
   color: var(--ink);
   background: var(--cream);
@@ -23,10 +24,7 @@
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(245, 223, 212, .45), transparent 30%),
-    radial-gradient(circle at 90% 30%, rgba(228, 238, 232, .55), transparent 28%),
-    var(--cream);
+  background: var(--cream);
   color: var(--ink);
   font-family: "DM Sans", sans-serif;
   line-height: 1.6;
@@ -34,9 +32,8 @@ body {
 
 h1,
 h2,
-h3,
-.logo {
-  font-family: "Playfair Display", Georgia, serif;
+h3 {
+  font-family: "Space Grotesk", sans-serif;
   line-height: 1.15;
 }
 
@@ -54,6 +51,6 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid rgba(140, 166, 154, .55);
+  outline: 3px solid rgba(85, 70, 255, .45);
   outline-offset: 2px;
 }

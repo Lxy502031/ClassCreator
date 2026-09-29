@@ -76,10 +76,63 @@
   margin-top: 7px;
 }
 
+.admin-help {
+  color: var(--muted);
+  font-size: .75rem;
+  line-height: 1.55;
+  margin-top: -3px;
+}
+
 .admin-public-link {
   color: var(--terracotta-dark);
   font-size: .84rem;
   font-weight: 700;
+}
+
+.admin-admin-form {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.admin-admin-form label {
+  grid-column: 1 / -1;
+}
+
+.admin-admin-form .admin-primary {
+  align-self: end;
+}
+
+.admin-list {
+  display: grid;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.admin-list-record {
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 12px 14px;
+}
+
+.admin-list-record p {
+  color: var(--muted);
+  font-size: .8rem;
+}
+
+.admin-list-record button {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--terracotta-dark);
+  cursor: pointer;
+  font-size: .75rem;
+  font-weight: 700;
+  min-height: 38px;
+  padding: 7px 13px;
 }
 
 .admin-card {
@@ -120,6 +173,13 @@
 
 .admin-form {
   display: grid;
+  gap: 10px;
+}
+
+.admin-form-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -203,6 +263,78 @@
   opacity: .6;
 }
 
+.admin-secondary,
+.override-record button,
+.booking-edit-form button {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 700;
+  min-height: 40px;
+  padding: 8px 14px;
+}
+
+.admin-secondary:disabled,
+.override-record button:disabled,
+.booking-edit-form button:disabled {
+  cursor: wait;
+  opacity: .6;
+}
+
+.override-session-fields {
+  border: 0;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.override-session-fields[hidden] {
+  display: none;
+}
+
+.override-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.override-record {
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 14px;
+}
+
+.override-record h3 {
+  font-size: .94rem;
+}
+
+.override-record p {
+  color: var(--muted);
+  font-size: .76rem;
+  margin-top: 4px;
+}
+
+.override-record-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.override-record .override-delete,
+.booking-record .booking-cancel {
+  color: var(--terracotta-dark);
+}
+
 .admin-status {
   border-radius: 10px;
   margin: 0 0 20px;
@@ -251,6 +383,53 @@
   padding: 8px 14px;
 }
 
+.booking-edit-form {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 9px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 14px;
+  padding-top: 14px;
+}
+
+.booking-edit-form label {
+  color: var(--ink);
+  display: grid;
+  font-size: .72rem;
+  font-weight: 700;
+  gap: 5px;
+}
+
+.booking-edit-form label:first-child,
+.booking-edit-form label:nth-child(2),
+.booking-edit-form .booking-edit-actions {
+  grid-column: 1 / -1;
+}
+
+.booking-edit-form input {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-height: 40px;
+  padding: 8px 10px;
+  width: 100%;
+}
+
+.booking-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.booking-edit-actions .admin-primary {
+  min-height: 40px;
+  padding: 8px 14px;
+}
+
+.booking-record .booking-cancel {
+  margin-top: 10px;
+}
+
 @media (max-width: 560px) {
   .admin-main {
     padding: 30px 14px 52px;
@@ -264,5 +443,28 @@
 
   .admin-time-fields {
     grid-template-columns: 1fr;
+  }
+
+  .admin-admin-form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-admin-form label {
+    grid-column: 1;
+  }
+
+  .booking-edit-form {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-edit-form label,
+  .booking-edit-form label:first-child,
+  .booking-edit-form label:nth-child(2),
+  .booking-edit-form .booking-edit-actions {
+    grid-column: 1;
+  }
+
+  .override-record {
+    align-items: flex-start;
   }
 }

@@ -94,11 +94,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "lesson-time-option";
-      button.textContent = formatTime(slot);
-      button.dataset.slot = slot;
-      button.setAttribute("aria-pressed", String(slot === selectedSlot));
-      button.classList.toggle("selected", slot === selectedSlot);
-      button.addEventListener("click", () => setSelection(slot));
+      button.textContent = `${formatTime(slot.slot_start)} · ${slot.spots_remaining} ${slot.spots_remaining === 1 ? "spot" : "spots"} left`;
+      button.dataset.slot = slot.slot_start;
+      button.setAttribute("aria-pressed", String(slot.slot_start === selectedSlot));
+      button.classList.toggle("selected", slot.slot_start === selectedSlot);
+      button.addEventListener("click", () => setSelection(slot.slot_start));
       timesContainer.append(button);
     });
   }
@@ -166,13 +166,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (typeof row.slot_start !== "string") return;
         const day = dateInSingapore(new Date(row.slot_start));
         const slots = slotsByDate.get(day) || [];
-        slots.push(row.slot_start);
+        slots.push({
+          slot_start: row.slot_start,
+          spots_remaining: typeof row.spots_remaining === "number" ? row.spots_remaining : 1
+        });
         slotsByDate.set(day, slots);
       });
       if (!selectedDate || !(slotsByDate.get(selectedDate) || []).length) {
         selectedDate = [...slotsByDate.keys()].sort()[0] || "";
       }
-      if (selectedSlot && !(slotsByDate.get(selectedDate) || []).includes(selectedSlot)) {
+      if (selectedSlot && !(slotsByDate.get(selectedDate) || []).some(slot => slot.slot_start === selectedSlot)) {
         setSelection(null);
       }
       renderCalendar();
@@ -270,7 +273,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!response.ok || result.booked !== true) {
         throw new Error(result.error || "We couldn’t reserve that lesson time. Please try again.");
       }
-      slotsByDate.set(selectedDate, (slotsByDate.get(selectedDate) || []).filter(slot => slot !== selectedSlot));
+      const updatedSlots = (slotsByDate.get(selectedDate) || [])
+        .map(slot => slot.slot_start === selectedSlot
+          ? { ...slot, spots_remaining: slot.spots_remaining - 1 }
+          : slot)
+        .filter(slot => slot.spots_remaining > 0);
+      slotsByDate.set(selectedDate, updatedSlots);
       setSelection(null);
       renderCalendar();
       renderTimes();

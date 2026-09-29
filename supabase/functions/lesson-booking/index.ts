@@ -128,6 +128,7 @@ Deno.serve(async request => {
       "You have reached the daily booking limit. Please contact us if you need help",
       "That lesson time is no longer available",
       "That lesson time overlaps with a booking. Please choose another available time",
+      "That lesson session is full. Please choose another available time",
       "That lesson time was just booked. Please choose another available time",
       "That booking request was cancelled. Please choose a new time"
     ]);

@@ -5,9 +5,13 @@ Standalone lesson booking and management website. The public calendar and privat
 ## Pages
 
 - `/` — public schedule, calendar, and reservation form
-- `/admin.html` — administrator-only schedule management and booking list
+- `/admin.html` — administrator-only weekly and date-specific schedule controls, student capacity, and editable bookings
 
-The admin page requires a confirmed Supabase user with `app_metadata.role = "admin"`. Database row-level security continues to enforce access; the page check is not the only protection.
+The admin page requires a confirmed Supabase user authorized by the database administrator list. The original primary administrator also retains the existing `app_metadata.role = "admin"` check. Database row-level security continues to enforce access; the page check is not the only protection.
+
+The administrator can edit the regular weekly days and hours, session length, capacity (1–50 students), booking horizon, class details, and whether bookings are open. One-off date overrides can add sessions outside the weekly schedule, change hours/length/capacity for a particular date, or close a date. Upcoming bookings can be edited or rescheduled to a valid, available session, or cancelled. The footer’s subtle “Studio sign-in” link opens the protected admin page; the link’s low visibility is only a convenience, not an access control.
+
+To add another studio administrator, first create and verify their Supabase Auth account, then sign in to the admin page and add their verified email under “Studio administrators.” Administrators can remove other added administrators; the original primary administrator cannot be removed.
 
 ## Local preview
 
@@ -15,9 +19,14 @@ Run a static server from this directory on port 8100 (for example, `python -m ht
 
 ## Supabase
 
-The frontend uses the public anon key in `supabase-config.js`; do not put a service-role key or provider API key in the website. The lesson tables and migrations are retained in `supabase/migrations` for reference. They are already applied to the shared production project; do not run `supabase db push` from this repository against that project.
+The frontend uses the public anon key in `supabase-config.js`; do not put a service-role key or provider API key in the website. The lesson tables and migrations are retained in `supabase/migrations` for reference. Apply these migrations in order in the Supabase SQL Editor before using the updated admin tools or availability endpoint:
 
-Deploy the Edge Function from this repository when intentionally updating the shared backend:
+1. `20260929030000_expand_lesson_scheduling_controls.sql` adds capacity, date overrides, and editable/reschedulable bookings.
+2. `20260929040000_manage_lesson_admins.sql` adds administrator management and updates database authorization.
+
+Do not run `supabase db push` from this repository against the shared project.
+
+After the database migration is applied, deploy the Edge Function from this repository to update the public booking error message:
 
 ```powershell
 npx supabase functions deploy lesson-booking --project-ref ulahmnqqafztbcyzfuej --no-verify-jwt

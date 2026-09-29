@@ -3,34 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Discover creative classes and reserve your place in an upcoming lesson." />
-  <meta name="theme-color" content="#f7f3ed" />
-  <title>Book a Creative Class | ClassCreator</title>
-  <link rel="stylesheet" href="./base.css" />
-  <link rel="stylesheet" href="./lessons.css" />
+  <meta name="description" content="Welcome to Qingqing’s Knitting Cottage. Discover beginner-friendly knitting classes, quality yarn, and supplies hand-picked by Qingqing." />
+  <meta name="theme-color" content="#f5f5f8" />
+  <title>Qingqing’s Knitting Cottage | Knitting Classes &amp; Yarn</title>
+  <link rel="stylesheet" href="./base.css?v=2" />
+  <link rel="stylesheet" href="./lessons.css?v=4" />
 </head>
 <body class="lessons-page">
-  <header class="lessons-header">
-    <a class="logo" href="./">ClassCreator</a>
+  <header class="lessons-header" id="top">
+    <a class="lessons-brand" href="./" aria-label="Qingqing’s Knitting Cottage home">
+      <span class="lessons-brand-mark" aria-hidden="true">Q.</span>
+      <span>Qingqing’s Knitting Cottage</span>
+    </a>
     <nav aria-label="Main navigation">
-      <a href="./admin.html">Class admin</a>
+      <a class="lessons-nav-about" href="#studio">About Qingqing</a>
+      <a class="lessons-nav-book" href="#booking-heading">Find a session <span aria-hidden="true">↘</span></a>
     </nav>
   </header>
 
   <main class="lessons-main">
-    <section class="lessons-intro">
-      <p class="lessons-eyebrow">Make something with us</p>
-      <h1 id="lesson-title">Creative lessons, made personal.</h1>
-      <p id="lesson-description">Choose a time on the calendar and reserve your place in a creative lesson.</p>
-      <div class="lessons-intro-note"><span aria-hidden="true">✦</span> Friendly, hands-on sessions for curious makers</div>
+    <section class="lessons-intro" id="studio">
+      <div class="lessons-hero-copy">
+        <p class="lessons-eyebrow"><span aria-hidden="true"></span> WELCOME TO QINGQING’S LITTLE KNITTING CORNER 🧶</p>
+        <h1>One stitch at a time,<br /><em>knit a life you love.</em></h1>
+        <p class="lessons-hero-description">Here you’ll find beginner-friendly knitting classes, along with quality yarn and knitting supplies hand-picked by Qingqing.</p>
+        <div class="lessons-hero-actions">
+          <a class="lessons-hero-cta" href="#booking-heading">Find your session <span aria-hidden="true">↘</span></a>
+          <span class="lessons-hero-aside"><span aria-hidden="true">✳</span> Learn to knit · Shop for yarn · Make things you love</span>
+        </div>
+        <p class="lessons-class-tag"><span class="lessons-class-tag-dot" aria-hidden="true"></span> NOW BOOKING <strong id="lesson-title">Creative lessons</strong></p>
+      </div>
+
+      <div class="lessons-hero-art" aria-label="Knitted creations and the maker behind the lessons">
+        <div class="lessons-hero-art-backdrop" aria-hidden="true"></div>
+        <figure class="lessons-photo lessons-photo-maker">
+          <img src="./Images/WhatsApp%20Image%202026-09-28%20at%2018.57.20%20(2).jpeg" alt="The knitting teacher wearing a cream handmade knit top" fetchpriority="high" />
+          <figcaption>Meet Qingqing.</figcaption>
+        </figure>
+        <figure class="lessons-photo lessons-photo-knit">
+          <img src="./Images/WhatsApp%20Image%202026-09-28%20at%2018.57.21%20(3).jpeg" alt="A hand-knitted mauve patterned top on display" />
+        </figure>
+        <div class="lessons-hero-stamp" aria-hidden="true"><span>MAKE</span><span>IT</span><span>YOURS</span><b>✳</b></div>
+        <span class="lessons-hero-index" aria-hidden="true">01 / MAKE BY HAND</span>
+      </div>
+    </section>
+
+    <section class="lessons-studio-strip" aria-label="About the creative sessions">
+      <span>LEARN TO KNIT</span><i aria-hidden="true">·</i>
+      <span>SHOP FOR YARN</span><i aria-hidden="true">·</i>
+      <span>MAKE THINGS YOU LOVE</span>
+      <span class="lessons-strip-end">ONE STITCH AT A TIME.</span>
+    </section>
+
+    <section class="lessons-story" aria-labelledby="lessons-story-title">
+      <div class="lessons-story-heading">
+        <p class="lessons-eyebrow">YOUR FIRST STITCH STARTS HERE</p>
+        <h2 id="lessons-story-title">Start with a stitch.<br /><span>Make it yours.</span></h2>
+        <p>With Qingqing, start with your very first stitch and slowly knit something warm and uniquely yours.</p>
+        <a href="#booking-heading">Come make something <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="lessons-story-gallery">
+        <figure class="lessons-gallery-photo lessons-gallery-yarn">
+          <img src="./Images/WhatsApp%20Image%202026-09-28%20at%2018.57.20%20(1).jpeg" alt="A bright bundle of red linen yarn ready for a project" loading="lazy" />
+          <figcaption>01 <span>Choose your colour</span></figcaption>
+        </figure>
+        <figure class="lessons-gallery-photo lessons-gallery-knit">
+          <img src="./Images/WhatsApp%20Image%202026-09-28%20at%2018.57.21%20(2).jpeg" alt="A finished lilac and white hand-knitted top" loading="lazy" />
+          <figcaption>02 <span>Find your rhythm</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="lessons-booking-intro" aria-labelledby="booking-heading">
+      <div>
+        <p class="lessons-eyebrow">YOUR NEXT LITTLE ADVENTURE</p>
+        <h2 id="booking-heading">Pick a date.<br /><span>We'll bring the yarn.</span></h2>
+      </div>
+      <p id="lesson-description">Choose a time that works for you and reserve your place. No payment needed to book.</p>
     </section>
 
     <section id="lessons-booking" class="lessons-booking" aria-labelledby="booking-heading" hidden>
       <div class="lessons-calendar-panel">
         <div class="lessons-section-heading">
           <div>
-            <p class="lessons-eyebrow">Find a time</p>
-            <h2 id="booking-heading">Choose your lesson</h2>
+            <p class="lessons-eyebrow">01 — YOUR DAY</p>
+            <h2>Choose a date</h2>
             <p id="lesson-duration" class="lessons-muted"></p>
           </div>
         </div>
@@ -48,8 +105,8 @@
       </div>
 
       <form id="lesson-booking-form" class="lessons-form">
-        <p class="lessons-eyebrow">Save your place</p>
-        <h2>Lesson details</h2>
+        <p class="lessons-eyebrow">02 — YOUR DETAILS</p>
+        <h2>Save your place</h2>
         <p class="lessons-muted">No payment is needed to reserve a lesson. Confirmation details will be shown after you book.</p>
         <label for="lesson-student-name">Your name</label>
         <input id="lesson-student-name" name="name" autocomplete="name" maxlength="100" required />
@@ -58,8 +115,8 @@
         <label for="lesson-student-phone">Phone number</label>
         <input id="lesson-student-phone" name="phone" type="tel" autocomplete="tel" maxlength="24" placeholder="+65 8123 4567" required />
         <input class="lessons-honeypot" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" />
-        <div id="lesson-selection-summary" class="lesson-selection-summary">Choose an available date and time to continue.</div>
-        <button id="lesson-booking-submit" class="lessons-submit" type="submit" disabled>Reserve my lesson</button>
+        <div id="lesson-selection-summary" class="lesson-selection-summary"><span aria-hidden="true">✳</span> Choose an available date and time to continue.</div>
+        <button id="lesson-booking-submit" class="lessons-submit" type="submit" disabled>Reserve my place <span aria-hidden="true">↗</span></button>
         <p id="lesson-booking-status" class="lessons-form-status" role="status" aria-live="polite" hidden></p>
         <p class="lessons-privacy-note">Your contact details are used only to manage this lesson booking and its confirmation.</p>
       </form>
@@ -73,8 +130,10 @@
   </main>
 
   <footer class="lessons-footer">
-    <a href="./">ClassCreator</a>
-    <span>Find a time to make something wonderful.</span>
+    <a class="lessons-brand" href="./" aria-label="Qingqing’s Knitting Cottage home"><span class="lessons-brand-mark" aria-hidden="true">Q.</span><span>Qingqing’s Knitting Cottage</span></a>
+    <span>One stitch at a time, knit a life you love.</span>
+    <a class="lessons-footer-studio" href="./admin.html">Studio sign-in</a>
+    <a class="lessons-footer-top" href="#top">BACK TO TOP ↑</a>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
