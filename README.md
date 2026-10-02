@@ -6,6 +6,7 @@ Standalone lesson booking and management website. The public calendar and privat
 
 - `/` — public schedule, calendar, and reservation form
 - `/admin.html` — administrator-only weekly and date-specific schedule controls, student capacity, and editable bookings
+- The home page also has separate teacher and student product galleries. Students can create an account and submit products; uploads are validated for file type and size and published without an automated image review.
 
 The admin page requires a confirmed Supabase user authorized by the database administrator list. The original primary administrator also retains the existing `app_metadata.role = "admin"` check. Database row-level security continues to enforce access; the page check is not the only protection.
 
@@ -23,8 +24,23 @@ The frontend uses the public anon key in `supabase-config.js`; do not put a serv
 
 1. `20260929030000_expand_lesson_scheduling_controls.sql` adds capacity, date overrides, and editable/reschedulable bookings.
 2. `20260929040000_manage_lesson_admins.sql` adds administrator management and updates database authorization.
+3. `20260930010000_student_product_gallery.sql` adds the public product galleries, image storage, student upload limits, and gallery permissions.
 
 Do not run `supabase db push` from this repository against the shared project.
+
+### Product galleries
+
+Apply the gallery migration in the Supabase SQL Editor after the listed lesson migrations. In Supabase Authentication settings, enable student email/password sign-up and email confirmation; add the production website URL and local preview URL to the allowed redirect URLs. Students create their own accounts with a display name, confirm their email, and sign in to submit a JPEG, PNG, or WebP image (up to 5 MB) with a description. The name on their account is shown with the product. Student products are published without an automated image review. Each account can submit up to 10 products per 24 hours.
+
+Set `SITE_URL` to the production site's origin for the function's origin check, then deploy the function:
+
+```powershell
+npx supabase functions deploy gallery-submit --project-ref ulahmnqqafztbcyzfuej --no-verify-jwt
+```
+
+The teacher can add or remove products in the new **Qingqing’s creations** panel on `/admin.html`. Student image files are checked for supported formats and signatures, but their product descriptions are not automatically verified.
+
+Automated image review is currently disabled in `supabase/functions/gallery-submit/index.ts` so submissions do not depend on OpenAI API availability. To restore it later, enable `IMAGE_CHECK_ENABLED` and configure `OPENAI_API_KEY` as a Supabase Edge Function secret.
 
 After the database migration is applied, deploy the Edge Function from this repository to update the public booking error message:
 

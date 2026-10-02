@@ -42,6 +42,25 @@
       </div>
       <p id="admin-status" class="admin-status" role="status" aria-live="polite" hidden></p>
 
+      <section class="admin-card" aria-labelledby="teacher-gallery-heading">
+        <div class="admin-section-heading">
+          <div>
+            <p class="admin-eyebrow">Public product showcase</p>
+            <h2 id="teacher-gallery-heading">Qingqing’s creations</h2>
+            <p class="admin-muted">Add or remove products shown in the teacher gallery on the home page.</p>
+          </div>
+        </div>
+        <form id="teacher-gallery-form" class="admin-form">
+          <label for="teacher-product-description">Product description</label>
+          <textarea id="teacher-product-description" name="description" maxlength="500" rows="3" required></textarea>
+          <label for="teacher-product-image">Product photo <span>JPEG, PNG, or WebP · maximum 5 MB.</span></label>
+          <input id="teacher-product-image" name="image" type="file" accept="image/jpeg,image/png,image/webp" required />
+          <button id="teacher-gallery-submit" class="admin-primary" type="submit">Add to teacher gallery</button>
+        </form>
+        <div id="teacher-gallery-status" class="admin-status" role="status" aria-live="polite" hidden></div>
+        <div id="teacher-gallery-list" class="admin-list"></div>
+      </section>
+
       <section class="admin-card">
         <div class="admin-section-heading">
           <div>
@@ -149,7 +168,8 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase-config.js"></script>
-  <script src="./admin.js?v=4" defer></script>
+  <script src="./supabase-config.js?v=2"></script>
+  <script src="./gallery-admin.js?v=2" defer></script>
+  <script src="./admin.js?v=5" defer></script>
 </body>
 </html>

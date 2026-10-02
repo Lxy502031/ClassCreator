@@ -8,6 +8,7 @@
   <title>Qingqing’s Knitting Cottage | Knitting Classes &amp; Yarn</title>
   <link rel="stylesheet" href="./base.css?v=2" />
   <link rel="stylesheet" href="./lessons.css?v=7" />
+  <link rel="stylesheet" href="./gallery.css?v=1" />
 </head>
 <body class="lessons-page">
   <header class="lessons-header" id="top">
@@ -17,6 +18,7 @@
     </a>
     <nav aria-label="Main navigation">
       <a class="lessons-nav-about" href="#studio">About Qingqing</a>
+      <a class="lessons-nav-about" href="#teacher-gallery">Our makes</a>
       <a class="lessons-nav-book" href="#booking-heading">Find a session <span aria-hidden="true">↘</span></a>
     </nav>
   </header>
@@ -71,6 +73,70 @@
           <img src="./Images/WhatsApp%20Image%202026-09-28%20at%2018.57.21%20(2).jpeg" alt="A finished lilac and white hand-knitted top" loading="lazy" />
           <figcaption>02 <span>Find your rhythm</span></figcaption>
         </figure>
+      </div>
+    </section>
+
+    <section id="teacher-gallery" class="product-gallery teacher-gallery" aria-labelledby="teacher-gallery-title">
+      <div class="product-gallery-heading">
+        <div>
+          <p class="lessons-eyebrow">MADE WITH LOVE</p>
+          <h2 id="teacher-gallery-title">Qingqing’s creations</h2>
+          <p>Explore the handmade pieces and yarn selected by your teacher.</p>
+        </div>
+        <span class="product-gallery-mark" aria-hidden="true">01 / TEACHER</span>
+      </div>
+      <div id="teacher-products" class="product-gallery-grid" aria-live="polite">
+        <p class="product-gallery-empty">Loading Qingqing’s creations…</p>
+      </div>
+    </section>
+
+    <section id="student-gallery" class="product-gallery student-gallery" aria-labelledby="student-gallery-title">
+      <div class="product-gallery-heading">
+        <div>
+          <p class="lessons-eyebrow">MADE BY OUR COMMUNITY</p>
+          <h2 id="student-gallery-title">Student creations</h2>
+          <p>See what our students have made, one stitch at a time.</p>
+        </div>
+        <span class="product-gallery-mark" aria-hidden="true">02 / STUDENTS</span>
+      </div>
+      <div id="student-products" class="product-gallery-grid" aria-live="polite">
+        <p class="product-gallery-empty">Loading student creations…</p>
+      </div>
+      <div class="student-gallery-contribute">
+        <div class="gallery-auth-copy">
+          <p class="lessons-eyebrow">SHARE WHAT YOU MADE</p>
+          <h3 id="gallery-account-heading">A little something you’ve made?</h3>
+          <p id="gallery-account-message">Sign in or create a student account to add your product and show your work to the community.</p>
+        </div>
+        <form id="gallery-auth-form" class="gallery-form">
+          <fieldset class="gallery-auth-modes">
+            <legend>Student account</legend>
+            <label><input type="radio" name="account_mode" value="signin" checked /> Sign in</label>
+            <label><input type="radio" name="account_mode" value="signup" /> Create account</label>
+          </fieldset>
+          <label for="gallery-display-name" id="gallery-display-name-label" hidden>Your name (shown with your products)</label>
+          <input id="gallery-display-name" name="display_name" maxlength="60" autocomplete="name" hidden />
+          <label for="gallery-email">Email address</label>
+          <input id="gallery-email" name="email" type="email" autocomplete="email" maxlength="320" required />
+          <label for="gallery-password">Password</label>
+          <input id="gallery-password" name="password" type="password" autocomplete="current-password" minlength="8" required />
+          <button id="gallery-auth-submit" class="gallery-submit" type="submit">Sign in</button>
+        </form>
+        <div id="gallery-upload-area" hidden>
+          <p id="gallery-signed-in" class="gallery-signed-in"></p>
+          <button id="gallery-signout" class="gallery-signout" type="button">Sign out</button>
+          <form id="gallery-upload-form" class="gallery-form">
+            <label for="gallery-public-name" id="gallery-public-name-label" hidden>Your name (shown with your products)</label>
+            <input id="gallery-public-name" name="public_name" maxlength="60" autocomplete="name" hidden />
+            <label for="gallery-product-description">What did you make?</label>
+            <textarea id="gallery-product-description" name="description" maxlength="500" rows="3" placeholder="Describe your handmade product…" required></textarea>
+            <label for="gallery-product-image">Product photo</label>
+            <input id="gallery-product-image" name="image" type="file" accept="image/jpeg,image/png,image/webp" required />
+            <p class="gallery-upload-note">JPEG, PNG, or WebP · maximum 5 MB. Products are published without an automated image review. Published products and your account display name are public. Limit: 10 submissions per account every 24 hours.</p>
+            <button id="gallery-upload-submit" class="gallery-submit" type="submit">Share product</button>
+          </form>
+        </div>
+        <p id="gallery-status" class="gallery-status" role="status" aria-live="polite" hidden></p>
       </div>
     </section>
 
@@ -137,7 +203,8 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./supabase-config.js"></script>
-  <script src="./lessons.js" defer></script>
+  <script src="./supabase-config.js?v=2"></script>
+  <script src="./gallery.js?v=4" defer></script>
+  <script src="./lessons.js?v=8" defer></script>
 </body>
 </html>

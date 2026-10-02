@@ -92,14 +92,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("override-save").textContent = "Save date override";
   }
 
-  if (!config?.url || !config?.anonKey || !window.supabase?.createClient) {
+  if (!config?.url || !config?.anonKey || !window.getClassCreatorSupabaseClient) {
     showGate("Admin tools are not configured", "The Supabase project settings could not be loaded.");
     return;
   }
 
-  client = window.supabase.createClient(config.url, config.anonKey, {
-    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
-  });
+  client = window.getClassCreatorSupabaseClient();
+  if (!client) {
+    showGate("Admin tools are not configured", "The Supabase project settings could not be loaded.");
+    return;
+  }
 
   async function openAdmin() {
     const { data: sessionData, error: sessionError } = await client.auth.getSession();
@@ -120,7 +122,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const user = userData.user;
     if (!user.email_confirmed_at) {
-      await client.auth.signOut();
       showGate("Administrator access required", "Sign in with a confirmed account that has been granted studio access.", true);
       return;
     }
@@ -128,7 +129,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const { data: isAdmin, error: adminError } = await client.rpc("is_store_admin");
     if (adminError || !isAdmin) {
       if (adminError) console.error("Could not verify studio administrator access.", adminError);
-      await client.auth.signOut();
       showGate(
         "Administrator access required",
         adminError?.message || "This account has not been granted studio access.",

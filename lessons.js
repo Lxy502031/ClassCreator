@@ -191,14 +191,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  if (!setup?.url || !setup?.anonKey || !window.supabase?.createClient) {
+  if (!setup?.url || !setup?.anonKey || !window.getClassCreatorSupabaseClient) {
     loading.hidden = true;
     unavailable.hidden = false;
     unavailable.querySelector("p").textContent = "Bookings aren’t configured yet. Please contact us to ask about lessons.";
     return;
   }
 
-  client = window.supabase.createClient(setup.url, setup.anonKey);
+  client = window.getClassCreatorSupabaseClient();
+  if (!client) {
+    loading.hidden = true;
+    unavailable.hidden = false;
+    unavailable.querySelector("p").textContent = "Bookings aren’t configured yet. Please contact us to ask about lessons.";
+    return;
+  }
   try {
     const { data, error } = await client.from("lesson_settings")
       .select("class_title,description,weekdays,start_time,end_time,duration_minutes,booking_horizon_days,is_active")
